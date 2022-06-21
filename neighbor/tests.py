@@ -21,3 +21,30 @@ class ProfileTest(TestCase):
         self.clemo.delete_profile()
         all_profiles = Profile.objects.all()
         self.assertEqual(len(all_profiles),0)
+
+
+class NeighbourhoodTestCase(TestCase):
+    def setUp(self):
+        self.new_ neighborhood= Project(name ='greg',location = 'Nairobi',image = 'trial.jpg',description = 'I live in this hood',user = clemo,hood_logo= 'logo.jpeg', emergency_contact= '911',occupants_count ='10')
+
+
+    def test_save_image(self):
+        self.image.save_image()
+        image = Image.objects.all()
+        self.assertEqual(len(pictures),1)
+
+    def test_delete_image(self):
+        self.image.save_image()
+        self.image.delete_image()
+        image_list = Image.objects.all()
+        self.assertTrue(len(image)==0)
+
+    def test_get_all_images(self):
+        self.image.save_image()
+        all_images = Image.get_all_images()
+        self.assertTrue(len(all_pictures) < 1)
+
+    def test_get_one_image(self):
+        self.food.save_image()
+        one_pic = Image.get_one_image(self.food.id)
+        self.assertTrue(one_pic.name == self.picture.name)
