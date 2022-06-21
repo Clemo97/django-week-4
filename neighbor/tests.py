@@ -48,3 +48,29 @@ class NeighbourhoodTestCase(TestCase):
         self.food.save_image()
         one_pic = Image.get_one_image(self.food.id)
         self.assertTrue(one_pic.name == self.picture.name)
+        
+
+class BusinessTestCase(TestCase):
+    self.new_ neighborhood= Project(name = 'shop',user = 'Clemo',email = 'test@gmail',neighborhood = 'Meru',descrption='This Hood')
+
+
+    def test_save_image(self):
+        self.name.save_name()
+        name = Business.objects.all()
+        self.assertEqual(len(pictures),1)
+
+    def test_delete_image(self):
+        self.name.save_image()
+        self.name.delete_image()
+        image_list = Business.objects.all()
+        self.assertTrue(len(image)==0)
+
+    def test_get_all_images(self):
+        self.name.save_name()
+        all_names = Business.get_all_images()
+        self.assertTrue(len(all_names) < 1)
+
+    def test_get_one_image(self):
+        self.food.save_image()
+        one_name = Business.get_one_name(self.food.id)
+        self.assertTrue(one_name.name == self.name.name)
