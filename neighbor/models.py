@@ -14,4 +14,11 @@ class Profile(models.Model):
     neighbourhood = models.ForeignKey("Neighbourhood",on_delete=models.CASCADE, default='', null=True, blank=True)
     profile_pic = models.ImageField( upload_to='profile/', blank ='true',default='default.png')
 
+    def __str__(self):
+        return f'{self.user.username} Profile'
+
+    def save_profile(self):
+        self.save
     
+    def delete_user(self):
+        self.delete()
