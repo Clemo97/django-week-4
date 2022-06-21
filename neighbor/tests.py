@@ -74,3 +74,27 @@ class BusinessTestCase(TestCase):
         self.food.save_image()
         one_name = Business.get_one_name(self.food.id)
         self.assertTrue(one_name.name == self.name.name)
+
+
+class PostTestCase(TestCase):
+    self.new_ neighborhood= Project(title = 'hood',User = 'Peris',text = 'I like your my hood',,date_craeted='Oct,12.2020')
+    def test_save_image(self):
+        self.name.save_name()
+        name = Business.objects.all()
+        self.assertEqual(len(pictures),1)
+
+    def test_delete_image(self):
+        self.name.save_name()
+        self.name.delete_image()
+        image_list = Business.objects.all()
+        self.assertTrue(len(image)==0)
+
+    def test_get_all_images(self):
+        self.name.save_image()
+        all_names = Business.get_all_images()
+        self.assertTrue(len(all_names) < 1)
+
+    def test_get_one_image(self):
+        self.food.save_image()
+        one_name = Business.get_one_name(self.food.id)
+        self.assertTrue(one_name.name == self.name.name)
