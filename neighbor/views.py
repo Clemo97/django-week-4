@@ -98,3 +98,32 @@ def new_hood(request):
     else:
         form = NewHoodForm()
     return render(request, 'new_hood.html', {"form": form})
+
+def edit_hood(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = EditHoodForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.admin = current_user.profile
+
+            image.save()
+        return redirect('hood')
+
+    else:
+        form = EditHoodForm()
+    return render(request, 'edit_hood.html', {'form': form})
+
+
+def joinhood(request, id):
+    hood = get_object_or_404(Neighbourhood, id=id)
+    request.user.profile.neighbourhood = hood
+    request.user.profile.save()
+    return redirect('hood')
+
+
+def leavehood(request, id):
+    hood = get_object_or_404(Neighbourhood, id=id)
+    request.user.profile.neighbourhood = None
+    request.user.profile.save()
+    return redirect('hood')
