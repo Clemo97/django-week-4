@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from .forms import SignUpForm, UserUpdateForm, ProfileUpdateForm, NewHoodForm, EditHoodForm, NewBizForm, NewPostForm
 from .models import Profile, Neighbourhood, Business, Post
 
+
 # Create your views here.
 def home(request):
     return render(request, 'home.html')
@@ -47,6 +48,7 @@ def profile(request):
         'profile_form': profile_form
     }
     return render(request, 'profile.html', context)
+
 
 @login_required(login_url='/accounts/login/')
 def update_profile(request):
@@ -99,6 +101,7 @@ def new_hood(request):
         form = NewHoodForm()
     return render(request, 'new_hood.html', {"form": form})
 
+
 def edit_hood(request):
     current_user = request.user
     if request.method == 'POST':
@@ -128,6 +131,7 @@ def leavehood(request, id):
     request.user.profile.save()
     return redirect('hood')
 
+
 @login_required(login_url='/accounts/login/')
 def singlehood(request, id):
     hood = Neighbourhood.objects.get(id=id)
@@ -156,3 +160,27 @@ def newbiz(request):
     else:
         form = NewBizForm()
     return render(request, 'newbiz.html', {"form": form})
+
+
+@login_required(login_url='/accounts/login/')
+def posthood(request, id):
+    post = Post.hood_post(id=id)
+    return render(request, 'hoodpost.html', {'post': post})
+
+
+@login_required(login_url='/accounts/login/')
+def post(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewPostForm(request.POST, request.FILES)
+        if form.is_valid():
+            post = form.save(commit=False)
+            post.user = current_user
+
+            post.save()
+
+        return redirect('hood')
+
+    else:
+        form = NewPostForm()
+    return render(request, 'post.html', {"form": form})
