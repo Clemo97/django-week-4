@@ -77,7 +77,7 @@ class BusinessTestCase(TestCase):
 
 
 class PostTestCase(TestCase):
-    self.new_ neighborhood= Project(title = 'hood',User = 'Peris',text = 'I like your my hood',,date_craeted='Oct,12.2020')
+    self.new_ neighborhood= Project(title = 'hood',User = 'Clemo',text = 'I like your my hood',,date_craeted='Oct,12.2020')
     def test_save_image(self):
         self.name.save_name()
         name = Business.objects.all()
