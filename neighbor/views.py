@@ -47,3 +47,54 @@ def profile(request):
         'profile_form': profile_form
     }
     return render(request, 'profile.html', context)
+
+@login_required(login_url='/accounts/login/')
+def update_profile(request):
+    current_user = request.user
+    if request.method == 'POST':
+
+        user_form = UserUpdateForm(request.POST, instance=request.user)
+        profile_form = ProfileUpdateForm(
+            request.POST, request.FILES, instance=request.user)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+
+            return redirect('profile')
+
+    else:
+        user_form = UserUpdateForm(instance=request.user)
+        profile_form = ProfileUpdateForm(instance=request.user)
+
+        context = {
+            'user_form': user_form,
+            'profile_form': profile_form
+
+        }
+
+    return render(request, 'update_profile.html', context)
+
+
+@login_required(login_url='/accounts/login/')
+def hood(request):
+    hoods = Neighbourhood.objects.all()
+    return render(request, 'neighbourhoods.html', {"hoods": hoods})
+
+
+@login_required(login_url='/accounts/login/')
+def new_hood(request):
+    current_user = request.user
+    if request.method == 'POST':
+        form = NewHoodForm(request.POST, request.FILES)
+        if form.is_valid():
+            image = form.save(commit=False)
+            image.admin = current_user.profile
+
+            image.save()
+
+        return redirect('hood')
+
+    else:
+        form = NewHoodForm()
+    return render(request, 'new_hood.html', {"form": form})
